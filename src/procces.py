@@ -45,7 +45,9 @@ class Voronoi:
             event = heappop(self.pq)
             if event.deleted:
                 continue
+
         self.sweep_point = event.p
+
         if event.site:
             self.process_site(event)
         else:
@@ -68,10 +70,20 @@ class Voronoi:
             self.first_point = event.p
             return
 
-            # bla bla bla bla
+        # Должна обрабатывать особый случай, когда две точки имеют
+        # одну и ту же наивысшую кординату y. В таком случае корень
+        # представляет собой лист. Обратите внимание, что при сортировке
+        # событий эти точки упорядочиваются по коордитнате x, так что
+        # следующая точка находится справа.
         if self.tree.is_leaf and event.y == self.tree.site.y:
             left = self.tree
             right = Arc(event.p)
+            start = Point(((self.first_point.x+self.event.p.x)/2,self.height))
+            edge = VoronoiEdge(start, self.first_point, event.p)
+            self.tree = Arc(edge = edge)
+            self.tree.set_left(left)
+            self.tree.set_right(right)
+            self.edges.append(edge)
 
     def proccess_circle(self, event: Event):
         pass
